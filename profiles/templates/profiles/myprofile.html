@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!--start=modal-->
+<div class="ui modal mymodal">
+    <i class="close icon"></i>
+    <div class="header">
+        update profile
+    </div>
+    <div class="image content">
+        <div class="ui medium image">
+            <img src="{{ obj.avatar.url }}">
+        </div>
+        <div class="description">
+            <div class="ui header">provide new info in your profile</div>
+            <form method="post" action="" class="ui form" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button">
+            Nope
+        </div>
+        <button type="submit" class="ui positive right labeled icon button">
+            update
+            <i class="checkmark icon"></i>
+        </button>
+        </form>
+    </div>
+</div>
+<!--end-modal-->
+<div class="ui segment">
+    {% if confirm == True %}
+    <div class="ui green message">your profile updated successfully</div>
+    {% endif %}
+    <h3>my profile:{{ request.user}}</h3>
+    <div class="ui grid">
+        <div class="row">
+            <div class="six wide column">
+                <img class="ui medium rounded image" src="{{ obj.avatar.url }}">
+                <div class="row mt-5">
+                    <button class="ui secondary button" id="modal_btn">update</button>
+                </div>
+            </div>
+            <div class="ten wide column">
+                <table calss="ui table">
+                    <tbody>
+                    <tr>
+                        <td>user name</td>
+                        <td>{{ obj.user.username }}</td>
+                    </tr>
+                    <tr>
+                        <td>first name</td>
+                        <td>{{ obj.first_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>last name</td>
+                        <td>{{ obj.last_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>bio</td>
+                        <td>{{ obj.bio }}</td>
+                    </tr>
+                    <tr>
+                        <td>no of friends</td>
+                        <td>{{ obj.get_friends_no }}</td>
+                    </tr>
+                    <tr>
+                        <td> friends</td>
+
+                        <td>
+                            <ul>
+                                {% for friend in obj.get_friends %}
+                                    <li>{{ friend }}</li>
+                                {% endfor %}
+                            </ul>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>no of posts</td>
+                        <td>{{ obj.get_posts_no }}</td>
+                    </tr>
+                    <tr>
+                        <td>no of likes given</td>
+                        <td>{{ obj.get_likes_given_no }}</td>
+                    </tr>
+                    <tr>
+                        <td>no of likes recieved</td>
+                        <td>{{ obj.get_liked_recieved_no }}</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
